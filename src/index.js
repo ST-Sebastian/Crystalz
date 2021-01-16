@@ -20,4 +20,3 @@ const mongo = require('../mongo');
   await registerEvents(client, '../events');
   await client.login(process.env.DJS_TOKEN);
 })();
-
