@@ -1,6 +1,6 @@
 
 const { Client } = require('discord.js');
-const { registerCommands, registerEvents } = require('.src//utils/registry');
+const { registerCommands, registerEvents } = require('./src/utils/registry');
 const config = require('./slappey.json');
 const client = new Client();
 
