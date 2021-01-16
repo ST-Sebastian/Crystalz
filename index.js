@@ -8,8 +8,8 @@ const client = new Client();
   client.commands = new Map();
   client.events = new Map();
   client.prefix = config.prefix;
-  await registerCommands(client, '../commands');
-  await registerEvents(client, '../events');
+  await registerCommands(client, './src/commands');
+  await registerEvents(client, './src/events');
   await client.login(process.env.DJS_TOKEN);
 })();
 
