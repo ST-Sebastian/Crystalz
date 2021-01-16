@@ -6,6 +6,6 @@ module.exports = class PrefixCommand extends BaseCommand {
   }
 
   run(client, message, args) {
-    message.channel.send('prefix command works');
+    message.channel.send('Prefix command works');
   }
 }
