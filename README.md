@@ -1,2 +1,2 @@
 # Crystalz
- Advanced Discord Bot
+Fun Discord bot with advanced admin commands
