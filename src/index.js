@@ -3,7 +3,7 @@ const { Client } = require('discord.js');
 const { registerCommands, registerEvents } = require('./utils/registry');
 const config = require('../slappey.json');
 const client = new Client();
-const mongo = require('./mongo');
+const mongo = require('../mongo');
 
 (async () => {
   client.commands = new Map();
