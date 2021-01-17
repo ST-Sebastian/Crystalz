@@ -6,7 +6,7 @@ module.exports = class SetWelcomeCommand extends BaseCommand {
     super('setWelcome', 'moderation', []);
   }
 
-  run(client, message, args) {
+  async run(client, message, args) {
     if (!member.hasPermission('ADMINISTRATOR')) {
       message.channel.send('Testing for now');
     }
