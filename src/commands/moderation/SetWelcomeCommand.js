@@ -24,7 +24,7 @@ module.exports = class SetWelcomeCommand extends BaseCommand {
           text: content
         }).save()
       } finally {
-        mongoose.conenction.close();
+        mongoose.connection.close();
       }
     });
   }
