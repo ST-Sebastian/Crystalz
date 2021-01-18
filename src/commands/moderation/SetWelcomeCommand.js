@@ -2,6 +2,8 @@ const BaseCommand = require('../../utils/structures/BaseCommand');
 const mongo = require('../../../mongo');
 const Discord = require('discord.js');
 const welcomeSchema = require('../../../schemas/welcome-schema');
+const { on } = require('../../../schemas/welcome-schema');
+const command = require('../../../command')
 
 module.exports = class SetWelcomeCommand extends BaseCommand {
   constructor() {
@@ -78,3 +80,11 @@ module.exports = class SetWelcomeCommand extends BaseCommand {
     }
   }
 }
+
+command(client, 'simjoin', (message) => {
+  onJoin(message.member)
+})
+
+client.on('guildMemberAdd', (member) => {
+  onJoin(member)
+})
