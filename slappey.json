@@ -2,5 +2,5 @@
   "name": "Crystalz",
   "language": "javascript",
   "manager": "npm",
-  "prefix": "!!"
+  "prefix": "-"
 }
