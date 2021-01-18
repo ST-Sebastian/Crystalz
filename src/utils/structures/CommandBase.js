@@ -1,4 +1,4 @@
-const { prefix } = require('./slappey.json');
+const { prefix } = require('../../../slappey.json');
 
 module.exports = (client, aliases, callback) => {
   if (typeof aliases === 'string') {
