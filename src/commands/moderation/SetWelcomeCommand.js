@@ -77,15 +77,13 @@ module.exports = class SetWelcomeCommand extends BaseCommand {
         const channel = guild.channels.cache.get(channelId)
         channel.send(text.replace(/<@>/g, `<@${member.id}>`))
       }
+        command(client, 'simjoin', (message) => {
+          onJoin(message.member)
+        });
         
+        client.on('guildMemberAdd', (member) => {
+          onJoin(member)
+        });
       });
-
-    command(client, 'simjoin', (message) => {
-      onJoin(message.member)
-    });
-    
-    client.on('guildMemberAdd', (member) => {
-      onJoin(member)
-    });
-  }
+    }
 }
