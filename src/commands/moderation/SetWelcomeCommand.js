@@ -30,11 +30,15 @@ module.exports = class SetWelcomeCommand extends BaseCommand {
 
     await mongo().then(async (mongoose) => {
       try {
-        await new welcomeSchema({
-          _id: guild.id,
-          channelId: channel.id,
-          text,
-        }).save()
+        await welcomeSchema.findOneAndUpdate({
+          _id: guild.id
+        }, {
+            _id: guild.id,
+            channelId: channel.id,
+            text,
+        }, {
+          upsert: true
+        });
       } finally {
         mongoose.connection.close();
       }
