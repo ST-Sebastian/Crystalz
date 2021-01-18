@@ -16,7 +16,7 @@ module.exports = class SetWelcomeCommand extends BaseCommand {
       return;
     }
 
-    let text = content
+    let text = content;
 
     const split = text.split(' ');
 
@@ -24,6 +24,9 @@ module.exports = class SetWelcomeCommand extends BaseCommand {
       channel.send('Please provide a welcome message!');
       return;
     }
+
+    split.shift();
+    text = split.join(' ');
 
     await mongo().then(async (mongoose) => {
       try {
