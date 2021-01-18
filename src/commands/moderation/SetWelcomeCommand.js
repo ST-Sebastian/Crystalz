@@ -9,6 +9,9 @@ module.exports = class SetWelcomeCommand extends BaseCommand {
   }
 
   async run(client, message, args) {
+
+    const cache = {}
+
     const { member, channel, content, guild } = message
 
     if (!member.hasPermission('ADMINISTRATOR')) {
@@ -28,6 +31,8 @@ module.exports = class SetWelcomeCommand extends BaseCommand {
     split.shift();
     text = split.join(' ');
 
+    cache[guild.id] = [channel.id, text]
+
     await mongo().then(async (mongoose) => {
       try {
         await welcomeSchema.findOneAndUpdate({
@@ -43,5 +48,30 @@ module.exports = class SetWelcomeCommand extends BaseCommand {
         mongoose.connection.close();
       }
     });
+
+    const onJoin = member => {
+      const { guild } = member
+
+      let data = cache[guild.id]
+
+      if (!data) {
+        console.log('Fetching from Database');
+
+        await mongo().then(async mongoose => {
+          try {
+            const result = await welcomeSchema.findOne({ _id: guild.id });
+
+            cache[guild.id] = [result.channelId, result.text]
+          } finally {
+            mongoose.connection.close();
+          }
+        });
+      }
+    }
+    const channelId = data[0]
+    const text = data[1]
+
+    const channel = guild.channels.cache.get(channelId);
+    channel.send(text);
   }
 }
