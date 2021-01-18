@@ -14,31 +14,6 @@ module.exports = class SetWelcomeCommand extends BaseCommand {
 
     const cache = {} // guildId: [channelId, text]
     const { member, channel, content, guild } = message
-
-    const onJoin = async (member) => {
-      const { guild } = member
-  
-      let data = cache[guild.id]
-  
-      if (!data) {
-        console.log('FETCHING FROM DATABASE');
-  
-        await mongo().then(async (mongoose) => {
-          try {
-            const result = await welcomeSchema.findOne({ _id: guild.id });
-  
-            cache[guild.id] = data = [result.channelId, result.text]
-          } finally {
-            mongoose.connection.close()
-          }
-      });
-  }
-    const channelId = data[0]
-    const text = data[1]
-
-    const channel = guild.channels.cache.get(channelId)
-    channel.send(text.replace(/<@>/g, `<@${member.id}>`))
-  }
   
       if (!member.hasPermission('ADMINISTRATOR')) {
         channel.send('You do not have permission to run this command.')
@@ -53,6 +28,31 @@ module.exports = class SetWelcomeCommand extends BaseCommand {
         channel.send('Please provide a welcome message')
         return
       }
+
+      const onJoin = async (member) => {
+        const { guild } = member
+    
+        let data = cache[guild.id]
+    
+        if (!data) {
+          console.log('FETCHING FROM DATABASE');
+    
+          await mongo().then(async (mongoose) => {
+            try {
+              const result = await welcomeSchema.findOne({ _id: guild.id });
+    
+              cache[guild.id] = data = [result.channelId, result.text]
+            } finally {
+              mongoose.connection.close()
+            }
+        });
+    }
+      const channelId = data[0]
+      const text = data[1]
+  
+      const channel = guild.channels.cache.get(channelId)
+      channel.send(text.replace(/<@>/g, `<@${member.id}>`))
+    }
   
       split.shift()
       text = split.join(' ')
